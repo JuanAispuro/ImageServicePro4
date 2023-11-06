@@ -90,7 +90,7 @@ DATABASES = {
     }
 }
 
-}
+
 # AUTH_USER_MODEL = 'collection.User'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -52,8 +52,10 @@ class Command(BaseCommand):
                                     image_url=row[7]
                                 )
                                 print(art)
-                                print(art.author)
+                                print(art.id)
+                                
                                 art.save()
+                                print(art.id)
 
         self.stdout.write(self.style.SUCCESS('Artwork created.'))
 

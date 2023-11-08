@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.core.paginator import Paginator
+
 from .models import (
     Artist,
     Genre,
@@ -21,7 +23,7 @@ def register(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/artworks/')
 
     else:
         f = UserCreationForm()
@@ -42,6 +44,16 @@ def index(request):
 #     genre = models.ForeignKey(Genre, null=True, on_delete=models.RESTRICT)
 #     image_url = models.URLField()
 def getArtworksAll(request):
-    artworks = Artwork.objects.all()[0:5]
-    print(artworks)
-    return render(request, "artwork/favArtwork.html", {"artworks": artworks})
+    # Get all artworks
+    all_artworks = Artwork.objects.all()
+
+    # Create a paginator with a specified number of items per page (e.g., 5 items per page)
+    paginator = Paginator(all_artworks, 5)  # Change 5 to the desired number of items per page
+
+    # Get the current page number from the request's query parameters (default to 1)
+    page_number = request.GET.get('page', 1)
+
+    # Get the Page object for the current page
+    page = paginator.get_page(page_number)
+
+    return render(request, "artwork/favArtwork.html", {"artworks": page})

@@ -1,0 +1,88 @@
+{% extends "collection/base.html" %}
+{% block content %}
+  <style>
+    .column-container {
+      display: flex;
+      justify-content: center;
+      max-height: 100vh; /* Set maximum height to 100% of the viewport height */
+    }
+    .container {
+      max-width: 100%; /* Set maximum width to the width of the screen */
+    }
+    .column {
+      flex: 0 0 250px; /* Set a fixed width of 250px */
+      margin: 0 12px; /* Increased margin for spacing */
+      display: flex;
+      flex-direction: column;
+      max-height: 100%; /* Set maximum height to 100% of the parent container */
+    }
+    .title {
+      line-height: 1.2; /* Set the line height to control text lines */
+      max-height: 7.2em; /* Set a maximum of 6 text lines with some buffer (adjust as needed) */
+      overflow-y: scroll; /* Enable vertical scroll if content exceeds the max height */
+      text-overflow: ellipsis;
+      margin-bottom: 8px; /* Add margin between title and picture */
+    }
+    .title::-webkit-scrollbar {
+      width: 0.2em; /* Set the width of the scrollbar */
+    }
+    .title::-webkit-scrollbar-thumb {
+      background-color: transparent; /* Make the scrollbar thumb transparent */
+    }
+    .picture {
+      flex: 2; /* 1/2 of the height */
+    }
+    .text {
+      flex: 1; /* 1/3 of the height */
+      text-align: justify; /* Justify the text within the .text element */
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+
+  <div class="container mx-auto">
+    <div class="text-center">
+      <div class="flex justify-center p-4">
+        <div class="container mx-8 w-full">
+          <div class="column-container">
+            {% for artwork in artworks %}
+              <div class="column border border-slate-300 p-4">
+                <div class="title text-blue-500">{{ artwork.title }}</div>
+                <div class="picture"><img class="w-40 h-25" src="{{ artwork.image_url }}" /></div>
+                <div class="text text-black">
+                  <p>Author: {{ artwork.author.name }}</p>
+                  <p>Date: {{ artwork.date }}</p>
+                  <p>Genre: {{ artwork.genre.name}}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    
+      <div class="pagination">
+        <span class="step-links">
+          {% if artworks.has_previous %}
+            <a href="?page=1">first</a>
+            <a href="?page={{ artworks.previous_page_number }}">previous</a>
+          {% endif %}
+    
+          <span class="current-page">{{ artworks.number }} of {{ artworks.paginator.num_pages }}</span>
+    
+          {% if artworks.has_next %}
+            <a href="?page={{ artworks.next_page_number }}">next</a>
+            <a href="?page={{ artworks.paginator.num_pages }}">last</a>
+          {% endif %}
+        </span>
+      </div>
+
+      <div class="container mx-auto flex justify-center items-center min-h-screen">
+        <a href="{% url 'artworks' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+            Go to All Artworks
+        </a>
+    </div>
+        </div>
+  </div>
+{% endblock %}

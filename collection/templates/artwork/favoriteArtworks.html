@@ -45,6 +45,8 @@
     }
   </style>
 
+ 
+
   <div class="container mx-auto">
     <div class="text-center">
       <div class="flex justify-center p-4">
@@ -55,28 +57,28 @@
             
               <div class="column border border-slate-300 p-4">
                 <div class="title text-blue-500">{{ artwork.title }}</div>
-                <div class="picture"><img class="w-40 h-25" src="{{ artwork.image_url }}" /></div>
+                <div class="picture"><img class="w-40 h-25" src="{{ favArtwork.image_url }}" /></div>
                 <div class="text text-black">
-                  <p>Author: {{ artwork.author.name }}</p>
-                  <p>Date: {{ artwork.date }}</p>
-                  <p>Genre: {{ artwork.genre.name}}</p>
+                  <p>Author: {{ favArtwork.author.name }}</p>
+                  <p>Date: {{ favArtwork.date }}</p>
+                  <p>Genre: {{ favArtwork.genre.name}}</p>
                  
-                 {% for infoArtwork in infoArtworks %}
-                    <p> ID Favorite: {{infoArtwork.id}}</p>
-                 {% endfor %}
+              
                   <p> Favorite Artwork User {{favArtwork.userfK}}</p> <br>
                   <p> Favorite Artwork ArtworkID{{favArtwork.artworkfK}}</p> <br>
                   <p> Favorite Artwork Favorited {{favArtwork.favorited}}</p> <br>
 
-                  {% comment %} <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
-                      <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
-                      <button type="submit" class="flex items-center justify-center">
-                          <i class="material-icons">Star</i> <!-- You can use a material icon or any other icon library -->
-                      </button>
-                  </form> {% endcomment %}
+                  <form hx-post="{% url 'favorite_artwork' favArtwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit">
+                    <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
+                    <button type="submit" class="flex items-center justify-center">
+                        <i class="material-icons">star</i>
+                    </button>
+                </form>
+
                 </div>
               </div>
-            {% endfor %}
+            {% endfor %} 
+            
           </div>
         </div>
       </div>

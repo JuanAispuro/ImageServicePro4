@@ -66,9 +66,28 @@ def getArtworksAll(request):
 
 def getFavoriteArtwork(request, idArtwork):
     # movie = Movie.objects.get(tmdb_id=idDB)
-    favArtwork = savedArtworks.objects.get(artworkfK=idArtwork)
-    favArtwork.favorited = True
+    favArtwork = savedArtworks.objects.get(userfK=request.user, artworkfK=idArtwork)
+    if favArtwork.favorited == True:
+        favArtwork.favorited = False
+    elif favArtwork.favorited == False:
+        favArtwork.favorited = True
+
+    
     favArtwork.save()
+
+    return render(request,"artwork/favoriteArtworks.html", {"artworks": favArtwork})
+
+def getFavoriteArtworkFavoriteScreen(request, idArtwork):
+    # movie = Movie.objects.get(tmdb_id=idDB)
+    favArtwork = savedArtworks.objects.get(userfK=request.user, artworkfK=idArtwork)
+    if favArtwork.favorited == True:
+        favArtwork.favorited = False
+    elif favArtwork.favorited == False:
+        favArtwork.favorited = True
+
+    
+    favArtwork.save()
+
 
     return render(request,"artwork/favoriteArtworks.html", {"artworks": favArtwork})
 
@@ -83,18 +102,22 @@ def getFavoriteArtworkAll(request):
     for f in favorite_artworks:
         print(f.id)
         print("--")
-        print(f)
+        print(f.author)
+        print("--")
+        print(f.title)
+        print("--")
+        print(f.date)
         
 
     # artwork= Artwork.objects.filter(id=all_favoriteArtwork)
     # artworks_info = Artwork.objects.filter()
     #{"favArtworks": favorite_artworks}
-    return render(request,"artwork/favoriteArtworks.html", {"favArtworks": all_favoriteArtwork},{"infoArtworks": f})
+    return render(request,"artwork/favoriteArtworks.html", {"favArtworks": favorite_artworks})
 
 @login_required
 def SavedArtworks(request):
     # Get all saved artworks for the current user
-    saved_artwork_entries = savedArtworks.objects.filter(userfK=request.user, favorited=False)
+    saved_artwork_entries = savedArtworks.objects.filter(userfK=request.user, )
 
     # Retrieve the actual artworks associated with the saved entries
     saved_artworks = [entry.artworkfK for entry in saved_artwork_entries]

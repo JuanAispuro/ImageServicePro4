@@ -4,37 +4,37 @@
     .column-container {
       display: flex;
       justify-content: center;
-      max-height: 100vh; /* Set maximum height to 100% of the viewport height */
+      max-height: 100vh; 
     }
     .container {
-      max-width: 100%; /* Set maximum width to the width of the screen */
+      max-width: 100%; 
     }
     .column {
-      flex: 0 0 250px; /* Set a fixed width of 250px */
-      margin: 0 12px; /* Increased margin for spacing */
+      flex: 0 0 250px; 
+      margin: 0 12px; 
       display: flex;
       flex-direction: column;
-      max-height: 100%; /* Set maximum height to 100% of the parent container */
+      max-height: 100%; 
     }
     .title {
-      line-height: 1.2; /* Set the line height to control text lines */
-      max-height: 7.2em; /* Set a maximum of 6 text lines with some buffer (adjust as needed) */
-      overflow-y: scroll; /* Enable vertical scroll if content exceeds the max height */
+      line-height: 1.2; 
+      max-height: 7.2em; 
+      overflow-y: scroll; 
       text-overflow: ellipsis;
-      margin-bottom: 8px; /* Add margin between title and picture */
+      margin-bottom: 8px; 
     }
     .title::-webkit-scrollbar {
-      width: 0.2em; /* Set the width of the scrollbar */
+      width: 0.2em; 
     }
     .title::-webkit-scrollbar-thumb {
-      background-color: transparent; /* Make the scrollbar thumb transparent */
+      background-color: transparent; 
     }
     .picture {
-      flex: 2; /* 1/2 of the height */
+      flex: 2; 
     }
     .text {
-      flex: 1; /* 1/3 of the height */
-      text-align: justify; /* Justify the text within the .text element */
+      flex: 1; 
+      text-align: justify; 
     }
     .pagination {
       display: flex;
@@ -64,10 +64,7 @@
                   <p>Genre: {{ favArtwork.genre.name}}</p>
                  
               
-                  <p> Favorite Artwork User {{favArtwork.userfK}}</p> <br>
-                  <p> Favorite Artwork ArtworkID{{favArtwork.artworkfK}}</p> <br>
-                  <p> Favorite Artwork Favorited {{favArtwork.favorited}}</p> <br>
-
+                 
                   <form hx-post="{% url 'favorite_artwork' favArtwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit">
                     <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                     <button type="submit" class="flex items-center justify-center">

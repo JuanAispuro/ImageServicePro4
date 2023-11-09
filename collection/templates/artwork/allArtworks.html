@@ -4,51 +4,49 @@
     .column-container {
       display: flex;
       justify-content: center;
-      max-height: 100vh; /* Set maximum height to 100% of the viewport height */
+      max-height: 100vh;
     }
     
     .icon-container {
-      text-align: center; /* Center the content horizontally */
-      /* Add other styling as needed */
-      width: 100px; /* Set a specific width for the container */
-      height: 100px; /* Set a specific height for the container */
-      border: 1px solid #000; /* Add a border as an example */
+      text-align: center; 
+      width: 100px; 
+      height: 100px; 
+      border: 1px solid #000;
     }
     
-    /* Styling for the icon (size, color, etc.) */
     i.material-icons {
-      font-size: 24px; /* Adjust the icon size as needed */
-      color: #007bff; /* Adjust the icon color as needed */
+      font-size: 24px; 
+      color: #007bff; 
     }
     .container {
-      max-width: 100%; /* Set maximum width to the width of the screen */
+      max-width: 100%; 
     }
     .column {
-      flex: 0 0 250px; /* Set a fixed width of 250px */
-      margin: 0 12px; /* Increased margin for spacing */
+      flex: 0 0 250px; 
+      margin: 0 12px; 
       display: flex;
       flex-direction: column;
-      max-height: 100%; /* Set maximum height to 100% of the parent container */
+      max-height: 100%; 
     }
     .title {
-      line-height: 1.2; /* Set the line height to control text lines */
-      max-height: 7.2em; /* Set a maximum of 6 text lines with some buffer (adjust as needed) */
-      overflow-y: scroll; /* Enable vertical scroll if content exceeds the max height */
+      line-height: 1.2; 
+      max-height: 7.2em; 
+      overflow-y: scroll; 
       text-overflow: ellipsis;
-      margin-bottom: 8px; /* Add margin between title and picture */
+      margin-bottom: 8px; 
     }
     .title::-webkit-scrollbar {
-      width: 0.2em; /* Set the width of the scrollbar */
+      width: 0.2em; 
     }
     .title::-webkit-scrollbar-thumb {
-      background-color: transparent; /* Make the scrollbar thumb transparent */
+      background-color: transparent; 
     }
     .picture {
-      flex: 2; /* 1/2 of the height */
+      flex: 2; 
     }
     .text {
-      flex: 1; /* 1/3 of the height */
-      text-align: justify; /* Justify the text within the .text element */
+      flex: 1; 
+      text-align: justify; 
     }
     .pagination {
       display: flex;
@@ -56,8 +54,8 @@
     }
   </style>
 
-  <div class="container mx-auto"> <!-- Center the content horizontally -->
-    <div class="text-center"> <!-- Center the text horizontally -->
+  <div class="container mx-auto"> 
+    <div class="text-center"> 
       <div class="flex justify-center p-4">
         <div class="container mx-8 w-full">
           <div class="column-container">
@@ -76,7 +74,7 @@
                   <form hx-post="{% url 'save_artwork' %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
                       <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                       <button type="submit" class="flex items-center justify-center">
-                          <i class="material-icons">bookmark</i> <!-- You can use a material icon or any other icon library -->
+                          <i class="material-icons">bookmark</i> <
                       </button>
                   </form>
               </div>
@@ -87,7 +85,7 @@
       </div>
     
       <!-- Pagination links -->
-      <div class="pagination"> <!-- Center the pagination text -->
+      <div class="pagination"> 
         <span class="step-links">
           {% if artworks.has_previous %}
             <a href="?page=1">first</a>

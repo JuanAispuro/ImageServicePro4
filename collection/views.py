@@ -25,7 +25,6 @@ def register(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
-            # Debug: Print a message to check if this block is executed
             print("User registered and logged in.")
 
             # Redirect the user to the "artworks" page after successful registration and login
@@ -53,10 +52,7 @@ def index(request):
 def getArtworksAll(request):
     # Get all artworks
     all_artworks = Artwork.objects.all()
-    # Create a paginator with a specified number of items per page (e.g., 5 items per page)
-    paginator = Paginator(all_artworks, 5)  # Change 5 to the desired number of items per page
-    
-    # Get the current page number from the request's query parameters (default to 1)
+    paginator = Paginator(all_artworks, 5)  
     page_number = request.GET.get('page', 1)
 
     # Get the Page object for the current page
@@ -77,19 +73,8 @@ def getFavoriteArtwork(request, idArtwork):
 
     return render(request,"artwork/favoriteArtworks.html", {"artworks": favArtwork})
 
-def getFavoriteArtworkFavoriteScreen(request, idArtwork):
-    # movie = Movie.objects.get(tmdb_id=idDB)
-    favArtwork = savedArtworks.objects.get(userfK=request.user, artworkfK=idArtwork)
-    if favArtwork.favorited == True:
-        favArtwork.favorited = False
-    elif favArtwork.favorited == False:
-        favArtwork.favorited = True
-
-    
-    favArtwork.save()
 
 
-    return render(request,"artwork/favoriteArtworks.html", {"artworks": favArtwork})
 
 def getFavoriteArtworkAll(request):
     all_favoriteArtwork = savedArtworks.objects.filter(userfK=request.user, favorited = True)
@@ -122,10 +107,9 @@ def SavedArtworks(request):
     # Retrieve the actual artworks associated with the saved entries
     saved_artworks = [entry.artworkfK for entry in saved_artwork_entries]
 
-    # Create a paginator with a specified number of items per page (e.g., 5 items per page)
-    paginator = Paginator(saved_artworks, 5)  # Change 5 to the desired number of items per page
+    paginator = Paginator(saved_artworks, 5)  
 
-    # Get the current page number from the request's query parameters (default to 1)
+    # Get the current page number from the request's query parameters 
     page_number = request.GET.get('page', 1)
 
     # Get the Page object for the current page

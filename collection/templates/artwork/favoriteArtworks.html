@@ -40,7 +40,7 @@
       display: flex;
       justify-content: center;
     }
-      .flex items-center justify-center {
+    .flex items-center justify-center {
         background-color: red;
     }
   </style>
@@ -50,7 +50,9 @@
       <div class="flex justify-center p-4">
         <div class="container mx-8 w-full">
           <div class="column-container">
-            {% for artwork in artworks %}
+
+            {% for favArtwork in favArtworks %}
+            
               <div class="column border border-slate-300 p-4">
                 <div class="title text-blue-500">{{ artwork.title }}</div>
                 <div class="picture"><img class="w-40 h-25" src="{{ artwork.image_url }}" /></div>
@@ -58,13 +60,20 @@
                   <p>Author: {{ artwork.author.name }}</p>
                   <p>Date: {{ artwork.date }}</p>
                   <p>Genre: {{ artwork.genre.name}}</p>
-                  <p> Estamos en SAVED ARTOWK</p>
-                  <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
+                 
+                 {% for infoArtwork in infoArtworks %}
+                    <p> ID Favorite: {{infoArtwork.id}}</p>
+                 {% endfor %}
+                  <p> Favorite Artwork User {{favArtwork.userfK}}</p> <br>
+                  <p> Favorite Artwork ArtworkID{{favArtwork.artworkfK}}</p> <br>
+                  <p> Favorite Artwork Favorited {{favArtwork.favorited}}</p> <br>
+
+                  {% comment %} <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
                       <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                       <button type="submit" class="flex items-center justify-center">
-                          <i class="material-icons">star</i> <!-- You can use a material icon or any other icon library -->
+                          <i class="material-icons">Star</i> <!-- You can use a material icon or any other icon library -->
                       </button>
-                  </form>
+                  </form> {% endcomment %}
                 </div>
               </div>
             {% endfor %}
@@ -94,10 +103,10 @@
         </a>
     </div>
 
-     <div class="container mx-auto flex justify-center items-center min-h-screen">
-      <a href="{% url 'allfavorite_artwork' %}" class="mt-2 bg-blue-500 hover-bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
-        Go to Favorite Artworks
-      </a>
+      <div class="container mx-auto flex justify-center items-center min-h-screen">
+        <a href="{% url 'index' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+            Go to saved Artworks
+        </a>
     </div>
         </div>
   </div>

@@ -64,6 +64,33 @@ def getArtworksAll(request):
     
     return render(request, "artwork/allArtworks.html", {"artworks": page})
 
+def getFavoriteArtwork(request, idArtwork):
+    # movie = Movie.objects.get(tmdb_id=idDB)
+    favArtwork = savedArtworks.objects.get(artworkfK=idArtwork)
+    favArtwork.favorited = True
+    favArtwork.save()
+
+    return render(request,"artwork/favoriteArtworks.html", {"artworks": favArtwork})
+
+def getFavoriteArtworkAll(request):
+    all_favoriteArtwork = savedArtworks.objects.filter(userfK=request.user, favorited = True)
+    favorite_artwork_ids = all_favoriteArtwork.values_list('artworkfK_id', flat=True)
+    
+    # Filtrar los objetos Artwork que tienen IDs en la lista de IDs de savedArtworks favoritos
+    favorite_artworks = Artwork.objects.filter(id__in=favorite_artwork_ids)
+    print(all_favoriteArtwork)
+    print(favorite_artworks)
+    for f in favorite_artworks:
+        print(f.id)
+        print("--")
+        print(f)
+        
+
+    # artwork= Artwork.objects.filter(id=all_favoriteArtwork)
+    # artworks_info = Artwork.objects.filter()
+    #{"favArtworks": favorite_artworks}
+    return render(request,"artwork/favoriteArtworks.html", {"favArtworks": all_favoriteArtwork},{"infoArtworks": f})
+
 @login_required
 def SavedArtworks(request):
     # Get all saved artworks for the current user
@@ -99,3 +126,10 @@ def save_artwork(request):
             return JsonResponse({'success': False, 'message': 'Artwork not found.'})
 
     return JsonResponse({'success': False, 'message': 'Authentication required.'})
+
+# def favorite_artwork(request):
+#     if request.method == 'POST' and request.user.is_authenticated:
+#         artwork_id = request.POST.get('artwork_id')
+#         try:
+#             artwork = Artwork.objects.get(pk=artwork_id)
+

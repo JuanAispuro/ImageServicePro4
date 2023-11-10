@@ -106,16 +106,16 @@
     
       <div class="pagination">
         <span class="step-links">
-          {% if artworks.has_previous %}
+          {% if favArtworks.has_previous %}
             <a href="?page=1">first</a>
-            <a href="?page={{ artworks.previous_page_number }}">previous</a>
+            <a href="?page={{ favArtworks.previous_page_number }}">previous</a>
           {% endif %}
     
-          <span class="current-page">{{ artworks.number }} of {{ artworks.paginator.num_pages }}</span>
+          <span class="current-page">{{ favArtworks.number }} of {{ favArtworks.paginator.num_pages }}</span>
     
-          {% if artworks.has_next %}
-            <a href="?page={{ artworks.next_page_number }}">next</a>
-            <a href="?page={{ artworks.paginator.num_pages }}">last</a>
+          {% if favArtworks.has_next %}
+            <a href="?page={{ favArtworks.next_page_number }}">next</a>
+            <a href="?page={{ favArtworks.paginator.num_pages }}">last</a>
           {% endif %}
         </span>
       </div>

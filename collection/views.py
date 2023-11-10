@@ -76,27 +76,20 @@ def getFavoriteArtwork(request, idArtwork):
 
 
 def getFavoriteArtworkAll(request):
-    all_favoriteArtwork = savedArtworks.objects.filter(userfK=request.user, favorited = True)
-    favorite_artwork_ids = all_favoriteArtwork.values_list('artworkfK_id', flat=True)
-    
-    # Filtrar los objetos Artwork que tienen IDs en la lista de IDs de savedArtworks favoritos
-    favorite_artworks = Artwork.objects.filter(id__in=favorite_artwork_ids)
-    print(all_favoriteArtwork)
-    print(favorite_artworks)
-    for f in favorite_artworks:
-        print(f.id)
-        print("--")
-        print(f.author)
-        print("--")
-        print(f.title)
-        print("--")
-        print(f.date)
-        
+    saved_artwork_entries = savedArtworks.objects.filter(userfK=request.user, favorited=True)
 
-    # artwork= Artwork.objects.filter(id=all_favoriteArtwork)
-    # artworks_info = Artwork.objects.filter()
-    #{"favArtworks": favorite_artworks}
-    return render(request,"artwork/favoriteArtworks.html", {"favArtworks": favorite_artworks})
+    # Retrieve the actual artworks associated with the saved entries
+    saved_artworks = [entry.artworkfK for entry in saved_artwork_entries]
+
+    paginator = Paginator(saved_artworks, 5)  
+
+    # Get the current page number from the request's query parameters 
+    page_number = request.GET.get('page', 1)
+
+    # Get the Page object for the current page
+    page = paginator.get_page(page_number)
+    print(page.paginator.num_pages)
+    return render(request,"artwork/favoriteArtworks.html", {"favArtworks": page})
 
 @login_required
 def SavedArtworks(request):
@@ -113,7 +106,7 @@ def SavedArtworks(request):
 
     # Get the Page object for the current page
     page = paginator.get_page(page_number)
-    
+
     return render(request, "artwork/savedArtworks.html", {"artworks": page})
 
 def save_artwork(request):

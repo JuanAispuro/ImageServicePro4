@@ -48,7 +48,19 @@
       justify-content: space-between;
     }
   </style>
+ <div class="dosBotones">
+      <div class="container mx-auto flex justify-center items-center min-h-screen">
+        <a href="{% url 'artworks' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+            Go to All Artworks
+        </a>
+    </div>
 
+      <div class="container mx-auto flex justify-center items-center min-h-screen">
+        <a href="{% url 'index' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+            Go to saved Artworks
+        </a>
+    </div>
+    </div>
   <h1 class="container mx-auto flex justify-center items-center min-h-screen ">Favorite Artworks Section</h1>
   <div class="container mx-auto">
     <div class="text-center">
@@ -75,13 +87,14 @@
                     <p><strong>Genre:</strong> No Genre </p>
                     {% endif %}
 
-                      
+                <div class="flex items-center justify-center">
                   <form hx-post="{% url 'favorite_artwork' favArtwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit">
                     <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                     <button type="submit" class="flex items-center justify-center">
-                        <i class="material-icons">star</i>
+                        <i class="material-icons">close</i>
                     </button>
                 </form>
+                 </div>
 
                 </div>
               </div>
@@ -107,19 +120,7 @@
         </span>
       </div>
 
-    <div class="dosBotones">
-      <div class="container mx-auto flex justify-center items-center min-h-screen">
-        <a href="{% url 'artworks' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
-            Go to All Artworks
-        </a>
-    </div>
-
-      <div class="container mx-auto flex justify-center items-center min-h-screen">
-        <a href="{% url 'index' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
-            Go to saved Artworks
-        </a>
-    </div>
-    </div>
+   
         </div>
   </div>
 {% endblock %}

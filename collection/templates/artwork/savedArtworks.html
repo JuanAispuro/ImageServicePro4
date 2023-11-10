@@ -18,7 +18,8 @@
     }
     .title {
       line-height: 1.2; 
-      max-height: 7.2em; 
+      max-height: 6.2em; 
+      min-height: 6.2em;
       overflow-y: scroll; 
       text-overflow: ellipsis;
       margin-bottom: 8px; 
@@ -35,17 +36,21 @@
     .text {
       flex: 1; 
       text-align: justify; 
+      padding-top: 10px;
     }
     .pagination {
       display: flex;
       justify-content: center;
     }
-
       .flex items-center justify-center {
         background-color: red;
     }
+    .dosBotones {
+      display: flex;
+      justify-content: space-between;
+    }
   </style>
-
+    <h1 class="container mx-auto flex justify-center items-center min-h-screen ">Saved Artworks Section</h1>
   <div class="container mx-auto">
     <div class="text-center">
       <div class="flex justify-center p-4">
@@ -56,15 +61,27 @@
                 <div class="title text-blue-500">{{ artwork.title }}</div>
                 <div class="picture"><img class="w-40 h-25" src="{{ artwork.image_url }}" /></div>
                 <div class="text text-black">
-                  <p>Author: {{ artwork.author.name }}</p>
-                  <p>Date: {{ artwork.date }}</p>
-                  <p>Genre: {{ artwork.genre.name}}</p>
-                  <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none"  hx-class="{'favorited': favorited, 'not-favorited': !favorited}">                    >
+                  <p><strong> Author:</strong> {{ artwork.author.name }}</p>
+                    {% if  artwork.date %}
+                    <p><strong>Date:</strong> {{ artwork.date }} </p>
+                    {% else %}
+                    <p><strong>Date:</strong> There is no date
+                    {% endif %}
+
+                    {% if artwork.genre.name %}
+                    <p><strong>Genre:</strong> {{ artwork.genre.name }}</p>
+                    {% else %}
+                    <p><strong>Genre:</strong> No Genre </p>
+                    {% endif %}
+
+                <div class="flex items-center justify-center">
+                      <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none"  hx-class="{'favorited': favorited, 'not-favorited': !favorited}">                    
                       <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                       <button type="submit" class="flex items-center justify-center">
-                          <i class="material-icons">star</i> <!-- You can use a material icon or any other icon library -->
+                          <i class="material-icons">star</i> 
                       </button>
                   </form>
+                  </div>
                 </div>
               </div>
             {% endfor %}
@@ -87,7 +104,7 @@
           {% endif %}
         </span>
       </div>
-
+      <div class="dosBotones">
       <div class="container mx-auto flex justify-center items-center min-h-screen">
         <a href="{% url 'artworks' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
             Go to All Artworks
@@ -99,6 +116,7 @@
         Go to Favorite Artworks
       </a>
     </div>
+      </div>
         </div>
   </div>
 {% endblock %}

@@ -54,7 +54,6 @@ def getArtworksAll(request):
     all_artworks = Artwork.objects.all()
     paginator = Paginator(all_artworks, 5)  
     page_number = request.GET.get('page', 1)
-
     # Get the Page object for the current page
     page = paginator.get_page(page_number)
     
@@ -114,7 +113,7 @@ def SavedArtworks(request):
 
     # Get the Page object for the current page
     page = paginator.get_page(page_number)
-
+    
     return render(request, "artwork/savedArtworks.html", {"artworks": page})
 
 def save_artwork(request):

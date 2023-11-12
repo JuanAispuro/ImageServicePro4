@@ -71,7 +71,7 @@
             {% for favArtwork in favArtworks %}
             
               <div class="column border border-slate-300 p-4">
-                <div class="title text-blue-500">{{ artwork.title }}</div>
+                <div class="title text-blue-500">{{ favArtwork.title }}</div>
                 <div class="picture"><img class="w-40 h-25" src="{{ favArtwork.image_url }}" /></div>
                 <div class="text text-black">
                   <p><strong>Author:</strong> {{ favArtwork.author.name }}</p>

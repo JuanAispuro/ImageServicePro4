@@ -5,12 +5,8 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.postgres import search
 from .models import (
-    Artist,
-    Genre,
-    Style,
-    Period,
     Artwork,
     savedArtworks,
 )
@@ -126,9 +122,28 @@ def save_artwork(request):
 
     return JsonResponse({'success': False, 'message': 'Authentication required.'})
 
-# def favorite_artwork(request):
-#     if request.method == 'POST' and request.user.is_authenticated:
-#         artwork_id = request.POST.get('artwork_id')
-#         try:
-#             artwork = Artwork.objects.get(pk=artwork_id)
 
+def search_view(request):
+        value = request.GET['search']
+        IndiArtworks = filterArwork(value)
+        paginator = Paginator(IndiArtworks, 5)  
+        page_number = request.GET.get('page', 1)
+        page = paginator.get_page(page_number)
+        return render(request, 'artwork/artwork_search.html', {'artworks': IndiArtworks, 'valorbuscado': value, "page_obj": page})
+  
+def filterArwork(value):
+    vector = (
+        search.SearchVector("title", weight="A")
+        + search.SearchVector("author__name", weight="B")
+        + search.SearchVector("style__name", weight="C")
+        + search.SearchVector("genre__name", weight="C")
+    )
+    query = search.SearchQuery(value, search_type="websearch")
+    return (
+        Artwork.objects.annotate(
+            search=vector,
+            rank=search.SearchRank(vector, query),
+        )
+        .filter(search=query)
+        .order_by("-rank")
+    )

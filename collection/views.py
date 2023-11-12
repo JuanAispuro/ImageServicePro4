@@ -10,7 +10,7 @@ from .models import (
     Artwork,
     savedArtworks,
 )
-
+# Register method 
 def register(request):
     if request.method == 'POST':
         f = UserCreationForm(request.POST)
@@ -36,15 +36,7 @@ def register(request):
 def index(request):
     return render(request, 'collection/index.html', {'data': 'Not'})
 
-#  id = models.AutoField(primary_key=True)
-#     author = models.ForeignKey(Artist, on_delete=models.RESTRICT)
-#     path = models.CharField(max_length=500)
-#     title = models.CharField(max_length=500)
-#     date = models.CharField(max_length=200, null=True)
-#     style = models.ForeignKey(Style, null=True, on_delete=models.RESTRICT)
-#     period = models.ForeignKey(Period, null=True, on_delete=models.RESTRICT)
-#     genre = models.ForeignKey(Genre, null=True, on_delete=models.RESTRICT)
-#     image_url = models.URLField()
+# method for artworks page
 def getArtworksAll(request):
     # Get all artworks
     all_artworks = Artwork.objects.all()
@@ -55,6 +47,7 @@ def getArtworksAll(request):
     
     return render(request, "artwork/allArtworks.html", {"artworks": page})
 
+# method for favoriting artworks
 def getFavoriteArtwork(request, idArtwork):
     # movie = Movie.objects.get(tmdb_id=idDB)
     favArtwork = savedArtworks.objects.get(userfK=request.user, artworkfK=idArtwork)
@@ -70,13 +63,15 @@ def getFavoriteArtwork(request, idArtwork):
 
 
 
-
+# method for favorite artworks page
 def getFavoriteArtworkAll(request):
     saved_artwork_entries = savedArtworks.objects.filter(userfK=request.user, favorited=True)
 
     # Retrieve the actual artworks associated with the saved entries
     saved_artworks = [entry.artworkfK for entry in saved_artwork_entries]
 
+
+    # adds pagination
     paginator = Paginator(saved_artworks, 5)  
 
     # Get the current page number from the request's query parameters 
@@ -87,6 +82,7 @@ def getFavoriteArtworkAll(request):
     print(page.paginator.num_pages)
     return render(request,"artwork/favoriteArtworks.html", {"favArtworks": page})
 
+# This is for when the user is logged in, it sends the user to his saved artworks page
 @login_required
 def SavedArtworks(request):
     # Get all saved artworks for the current user
@@ -105,6 +101,7 @@ def SavedArtworks(request):
 
     return render(request, "artwork/savedArtworks.html", {"artworks": page})
 
+# This is the method for saving artworks
 def save_artwork(request):
     if request.method == 'POST' and request.user.is_authenticated:
         artwork_id = request.POST.get('artwork_id')
@@ -122,7 +119,7 @@ def save_artwork(request):
 
     return JsonResponse({'success': False, 'message': 'Authentication required.'})
 
-
+# This is the search page method
 def search_view(request):
         value = request.GET['search']
         IndiArtworks = filterArwork(value)
@@ -130,7 +127,8 @@ def search_view(request):
         page_number = request.GET.get('page', 1)
         page = paginator.get_page(page_number)
         return render(request, 'artwork/artwork_search.html', {'artworks': IndiArtworks, 'valorbuscado': value, "page_obj": page})
-  
+
+# this is the method for the search bar
 def filterArwork(value):
     vector = (
         search.SearchVector("title", weight="A")

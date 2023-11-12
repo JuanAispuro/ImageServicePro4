@@ -5,7 +5,7 @@
 __pycache__
 db.sqlite3
 media
-
+.env
 # Tailwindcss 
 output.css
 tailwindcss
@@ -21,7 +21,7 @@ tailwindcss
 .idea/**/dictionaries
 .idea/**/shelf
 
-# AWS User-specific
+# AWS User-specificF
 .idea/**/aws.xml
 
 # Generated files

@@ -1,0 +1,126 @@
+{% extends "collection/base.html" %}
+{% block content %}
+  <style>
+    .column-container {
+      display: flex;
+      justify-content: center;
+      max-height: 100vh; 
+    }
+    .container {
+      max-width: 100%; 
+    }
+    .column {
+      flex: 0 0 250px; 
+      margin: 0 12px; 
+      display: flex;
+      flex-direction: column;
+      max-height: 100%; 
+    }
+    .title {
+      line-height: 1.2; 
+      max-height: 7.2em; 
+      overflow-y: scroll; 
+      text-overflow: ellipsis;
+      margin-bottom: 8px; 
+    }
+    .title::-webkit-scrollbar {
+      width: 0.2em; 
+    }
+    .title::-webkit-scrollbar-thumb {
+      background-color: transparent; 
+    }
+    .picture {
+      flex: 2; 
+    }
+    .text {
+      flex: 1; 
+      text-align: justify; 
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+    }
+    .flex items-center justify-center {
+        background-color: red;
+    }
+    .dosBotones {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+ <div class="dosBotones">
+      <div class="container mx-auto flex justify-center items-center min-h-screen">
+        <a href="{% url 'artworks' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+            Go to All Artworks
+        </a>
+    </div>
+
+      <div class="container mx-auto flex justify-center items-center min-h-screen">
+        <a href="{% url 'index' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+            Go to saved Artworks
+        </a>
+    </div>
+    </div>
+  <h1 class="container mx-auto flex justify-center items-center min-h-screen ">Favorite Artworks Section</h1>
+  <div class="container mx-auto">
+    <div class="text-center">
+      <div class="flex justify-center p-4">
+        <div class="container mx-8 w-full">
+          <div class="column-container">
+
+            {% for favArtwork in favArtworks %}
+            
+              <div class="column border border-slate-300 p-4">
+                <div class="title text-blue-500">{{ favArtwork.title }}</div>
+                <div class="picture"><img class="w-40 h-25" src="{{ favArtwork.image_url }}" /></div>
+                <div class="text text-black">
+                  <p><strong>Author:</strong> {{ favArtwork.author.name }}</p>
+                 {% if  favArtwork.date %}
+                    <p><strong>Date:</strong> {{ favArtwork.date }} </p>
+                    {% else %}
+                    <p><strong>Date:</strong> There is no date
+                    {% endif %}
+
+                    {% if favArtwork.genre.name %}
+                    <p><strong>Genre:</strong> {{ favArtwork.genre.name }}</p>
+                    {% else %}
+                    <p><strong>Genre:</strong> No Genre </p>
+                    {% endif %}
+
+                <div class="flex items-center justify-center">
+                  <form hx-post="{% url 'favorite_artwork' favArtwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit">
+                    <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
+                    <button type="submit" class="flex items-center justify-center">
+                        <i class="material-icons">close</i>
+                    </button>
+                </form>
+                 </div>
+
+                </div>
+              </div>
+            {% endfor %} 
+            
+          </div>
+        </div>
+      </div>
+    
+      <div class="pagination">
+        <span class="step-links">
+          {% if favArtworks.has_previous %}
+            <a href="?page=1">first</a>
+            <a href="?page={{ favArtworks.previous_page_number }}">previous</a>
+          {% endif %}
+    
+          <span class="current-page">{{ favArtworks.number }} of {{ favArtworks.paginator.num_pages }}</span>
+    
+          {% if favArtworks.has_next %}
+            <a href="?page={{ favArtworks.next_page_number }}">next</a>
+            <a href="?page={{ favArtworks.paginator.num_pages }}">last</a>
+          {% endif %}
+        </span>
+      </div>
+
+   
+        </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "collection/base.html" %}
+
+{% block content %}
+<style>
+    .column-container {
+      display: flex;
+      justify-content: center;
+      max-height: 100vh;
+    }
+    
+    .icon-container {
+      text-align: center; 
+      width: 100px; 
+      height: 100px; 
+      border: 1px solid #000;
+    }
+    
+    i.material-icons {
+      font-size: 24px; 
+      color: #007bff; 
+    }
+    .container {
+      max-width: 100%; 
+    }
+    .column {
+      flex: 0 0 250px; 
+      margin: 0 12px; 
+      display: flex;
+      flex-direction: column;
+      max-height: 100%; 
+    }
+    .title {
+      line-height: 1.2; 
+      max-height: 7.2em; 
+      overflow-y: scroll; 
+      text-overflow: ellipsis;
+      margin-bottom: 8px; 
+    }
+    .title::-webkit-scrollbar {
+      width: 0.2em; 
+    }
+    .title::-webkit-scrollbar-thumb {
+      background-color: transparent; 
+    }
+    .picture {
+      flex: 2; 
+    }
+    .text {
+      flex: 1; 
+      text-align: justify; 
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  <div class="container mx-auto"> 
+    <div class="text-center"> 
+      <div class="dosBotones">
+        <div class="container mx-auto flex justify-center items-center min-h-screen">
+          <a href="{% url 'artworks' %}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
+              Go to All Artworks
+          </a>
+      </div>
+      <div class="flex justify-center p-4">
+        
+        <div class="container mx-8 w-full">
+          
+          <div class="column-container">
+            {% for artwork in page_obj %}
+              <div class="column border border-slate-300 p-4">
+                <div class="title text-blue-500">{{ artwork.title }}</div>
+                <div class="picture"><img class="w-40 h-25" src="{{ artwork.image_url }}" /></div>
+                <div class="text text-black">
+                    <p>Author: {{ artwork.author.name }}</p>
+                    <p>Date: {{ artwork.date }}</p>
+                    <p>Genre: {{ artwork.genre.name }}</p>
+                    
+                </div>
+                <!-- button to add to saved -->
+                <div class="flex items-center justify-center">
+                  <form hx-post="{% url 'save_artwork' %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
+                      <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
+                      <button type="submit" class="flex items-center justify-center">
+                          <i class="material-icons">bookmark</i> 
+                      </button>
+                  </form>
+              </div>
+              </div>
+        {% endfor %}
+          </div>
+        </div>
+      </div>
+    
+        <div class="pagination"> 
+        <span class="step-links">
+           {% if page_obj.has_previous %}
+        <a href="?search={{ valorbuscado|stringformat:'s'}}&page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+          <span class="current-page">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+        <a href="?search={{ valorbuscado|stringformat:'s'}}&page={{ page_obj.next_page_number }}">Next</a>
+          {% endif %}
+    
+        </span>
+      </div>
+    </div>
+{% endblock content %}

@@ -64,17 +64,26 @@
                 <div class="title text-blue-500">{{ artwork.title }}</div>
                 <div class="picture"><img class="w-40 h-25" src="{{ artwork.image_url }}" /></div>
                 <div class="text text-black">
-                    <p>Author: {{ artwork.author.name }}</p>
-                    <p>Date: {{ artwork.date }}</p>
-                    <p>Genre: {{ artwork.genre.name }}</p>
-                    
+                    <p><strong>Author:</strong> {{ artwork.author.name }}</p>
+                 {% if  artwork.date %}
+                    <p><strong>Date:</strong> {{ artwork.date }} </p>
+                    {% else %}
+                    <p><strong>Date:</strong> There is no date
+                    {% endif %}
+
+                    {% if artwork.genre.name %}
+                    <p><strong>Genre:</strong> {{ artwork.genre.name }}</p>
+                    {% else %}
+                    <p><strong>Genre:</strong> No Genre </p>
+                    {% endif %}
+
                 </div>
                 <!-- button to add to saved -->
                 <div class="flex items-center justify-center">
                   <form hx-post="{% url 'save_artwork' %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
                       <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                       <button type="submit" class="flex items-center justify-center">
-                          <i class="material-icons">bookmark</i> <
+                          <i class="material-icons">bookmark</i> 
                       </button>
                   </form>
               </div>
@@ -101,7 +110,7 @@
         </span>
       </div>
     </div>
-    <div class="container mx-auto flex justify-center items-center min-h-screen">
+    <div class="container mx-auto flex justify-center items-center">
       <a href="{% url 'index' %}" class="mt-2 bg-blue-500 hover-bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
         Go to Saved Artworks
       </a>

@@ -31,6 +31,7 @@ En esta aplicación utilizaremos programación del lado del cliente utilizando l
 De manera opcional puedes utilizar otras librerías o JS.
 
 ## Url del video
+**https://drive.google.com/file/d/18kEAyW8gMiV-b2oBwkJzaVidXi7ob_6R/view?usp=sharing**
 
 ## Miembros del equipo
 - Juan Armando Aispuro Sánchez 19211593

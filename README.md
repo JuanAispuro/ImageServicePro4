@@ -32,7 +32,7 @@ De manera opcional puedes utilizar otras librerías o JS.
 
 ## Url del video
 
-##
+## Miembros del equipo
 - Juan Armando Aispuro Sánchez 19211593
 - Leonardo Mercado Celis 19211685
 

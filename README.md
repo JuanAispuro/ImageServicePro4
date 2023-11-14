@@ -30,6 +30,13 @@ Una vez que tengamos la base de datos podemos iniciar la implementación de los 
 En esta aplicación utilizaremos programación del lado del cliente utilizando las librerías [htmx](https://htmx.org/) y [hyperscript](https://hyperscript.org/).  
 De manera opcional puedes utilizar otras librerías o JS.
 
+## Url del video
+
+##
+- Juan Armando Aispuro Sánchez 19211593
+- Leonardo Mercado Celis 19211685
+
+
 
 
 

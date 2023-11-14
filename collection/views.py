@@ -123,7 +123,15 @@ def save_artwork(request):
         print(artwork_id)
         try:
             artwork = Artwork.objects.get(pk=artwork_id)
-            # Create or update a savedArtworks entry for the user and artwork
+            # Intenta obtener una entrada savedArtworks para el usuario y la obra de arte
+            saved = savedArtworks.objects.get(userfK=request.user, artworkfK=artwork)
+
+            # Elimina la entrada savedArtworks existente
+            saved.delete()
+            messages.success(request, "The artwork has been removed successfully!")
+
+        except savedArtworks.DoesNotExist:
+            # No existe la entrada savedArtworks, crea una nueva o actualiza la existente
             saved, created = savedArtworks.objects.get_or_create(
                 userfK=request.user, artworkfK=artwork
             )
@@ -131,18 +139,9 @@ def save_artwork(request):
             if not created:
                 saved.favorited = not saved.favorited
                 saved.save()
-                messages.success(request, "The artwork has been saved successfully!")
-                return redirect(to="save_artwork")
-            else:
-                saved.delete()
-                messages.success(request, "The artwork has been removed successfully!")
-                return redirect(to="save_artwork")
+            messages.success(request, "The artwork has been saved successfully!")
 
-        except Artwork.DoesNotExist:
-            messages.success(request, "The artwork has been removed successfully!")
-            return redirect(to="save_artwork")
-
-    return JsonResponse({"success": False, "message": "Authentication required."})
+        return redirect(to="save_artwork")
 
 
 # This is the search page method

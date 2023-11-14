@@ -30,7 +30,6 @@
 
          {% endblock style %}
       </style>
-      
   </head>
 
   {% comment %} <body class="bg-white dark:bg-slate-900" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'> {% endcomment %}
@@ -65,5 +64,19 @@
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {% if messages %}
+    {% for m in messages %}
+      <script>
+      Swal.fire({
+        "title":"Felicitaiones",
+        "text": "{{m}}"
+        "icon": "success"
+      })
+      </script>
+      {% endfor %}
+    {% endif %}
+
+    
 </body>
 </html>

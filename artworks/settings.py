@@ -32,6 +32,7 @@ DEBUG = env("DEBUG")
 # ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 ALLOWED_HOSTS = ["198.211.99.20", "localhost", "127.0.0.1"]
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 # Application definition
 
 INSTALLED_APPS = [

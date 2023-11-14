@@ -89,12 +89,14 @@
                     {% endif %}
 
                 <div class="flex items-center justify-center">
-                      <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none"  hx-class="{'favorited': favorited, 'not-favorited': !favorited}">                    
+
+                      <form hx-post="{% url 'favorite_artwork' artwork.id %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit"  hx-class="{'favorited': favorited, 'not-favorited': !favorited}" >                    
                       <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                       <button type="submit" class="flex items-center justify-center">
                           <i class="material-icons">star</i> 
                       </button>
                   </form>
+                  
                   </div>
                 </div>
               </div>
@@ -118,7 +120,13 @@
           {% endif %}
         </span>
       </div>
-     
+      {% if messages %} 
+          {% for msg in messages %}
+        <div class="alert alert-success flex items-center justify-center" role="alert"> {{ msg }} </div>
+        {% endfor %}
+        {% else %}
+        <div class= "flex items-center justify-center">  </div>
+        {% endif %}
         </div>
   </div>
 {% endblock %}

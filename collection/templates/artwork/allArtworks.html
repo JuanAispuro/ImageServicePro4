@@ -77,16 +77,20 @@
                     <p><strong>Genre:</strong> No Genre </p>
                     {% endif %}
 
+
+
                 </div>
                 <!-- button to add to saved -->
                 <div class="flex items-center justify-center">
-                  <form hx-post="{% url 'save_artwork' %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none">
+                  <form hx-post="{% url 'save_artwork' %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit">
                       <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
                       <button type="submit" class="flex items-center justify-center">
                           <i class="material-icons">bookmark</i> 
                       </button>
                   </form>
               </div>
+              
+                
               </div>
         {% endfor %}
           </div>
@@ -110,7 +114,14 @@
         </span>
       </div>
     </div>
-    <div class="container mx-auto flex justify-center items-center">
+        {% if messages %} 
+          {% for msg in messages %}
+        <div class="alert alert-success flex items-center justify-center" role="alert"> {{ msg }} </div>
+        {% endfor %}
+        {% else %}
+        <div class= "flex items-center justify-center">  </div>
+        {% endif %}
+    <div class="container mx-auto flex justify-center items-center bg-red-500">
       <a href="{% url 'index' %}" class="mt-2 bg-blue-500 hover-bg-blue-700 text-black font-bold py-2 px-4 rounded-full">
         Go to Saved Artworks
       </a>

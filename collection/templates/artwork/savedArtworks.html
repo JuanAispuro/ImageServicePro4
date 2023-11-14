@@ -96,6 +96,12 @@
                           <i class="material-icons">star</i> 
                       </button>
                   </form>
+                  <form hx-post="{% url 'save_artwork' %}" hx-headers="{'X-CSRFToken': csrf_token}" hx-swap="none" hx-trigger="submit">
+                      <input type="hidden" name="artwork_id" value="{{ artwork.id }}">
+                      <button type="submit" class="flex items-center justify-center">
+                          <i class="material-icons">close</i> 
+                      </button>
+                  </form>
                   
                   </div>
                 </div>

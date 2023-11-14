@@ -123,15 +123,12 @@ def save_artwork(request):
         print(artwork_id)
         try:
             artwork = Artwork.objects.get(pk=artwork_id)
-            # Intenta obtener una entrada savedArtworks para el usuario y la obra de arte
             saved = savedArtworks.objects.get(userfK=request.user, artworkfK=artwork)
 
-            # Elimina la entrada savedArtworks existente
             saved.delete()
             messages.success(request, "The artwork has been removed successfully!")
 
         except savedArtworks.DoesNotExist:
-            # No existe la entrada savedArtworks, crea una nueva o actualiza la existente
             saved, created = savedArtworks.objects.get_or_create(
                 userfK=request.user, artworkfK=artwork
             )

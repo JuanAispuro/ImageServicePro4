@@ -9,7 +9,7 @@ aprendizaje automático para clasificar o modificar la imagen.
 
 El proyecto sigue un estilo arquitectónico basado en evento como el visto en clase:
 
-![](./img/worker-queue)
+![](./img/worker-queue.png)
 
 **Componentes:**
 1. **Frontend Web:**

@@ -1,5 +1,7 @@
 # ImageService
 
+## Descripción General
+
 ### Proyecto: Servicio de Procesamiento de Imágenes
 
 En este proyecto vamos a desarrollar una aplicación web donde los usuarios
@@ -46,6 +48,9 @@ Podemos utilizar también django pero de manera alternativa para tu proyecto se 
 - Implementar diferentes tipos de procesamiento de imágenes para ver cómo se pueden gestionar distintas tareas.
 - Añadir una función para que los usuarios reciban notificaciones (por ejemplo, a través de correo electrónico o una notificación push web) una vez que su procesamiento de imágenes esté completo.
 - Incluir registro y monitoreo para observar el comportamiento del sistema bajo carga.
+
+
+## Requerimientos Técnicos
 
 Para este proyecto haremos un uso más completo de la plataforma Cloud de Amazon Web Services utilizando los siguientes componentes:
 

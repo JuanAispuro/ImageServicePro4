@@ -54,11 +54,11 @@ Podemos utilizar también django pero de manera alternativa para tu proyecto se 
 
 Para este proyecto haremos un uso más completo de la plataforma Cloud de Amazon Web Services utilizando los siguientes componentes:
 
-S3 Utilizaremos este servicio para almacenar las imágenes y otro contenido
-ECR Es necesario tener repositorios para almacenar las distintas versiones de las imágenes Docker que utilizaremos.
-ECS Utilizaremos el servicio Fargate pare ejecutar tareas y servicios.
-Cloud9 Por restricciones de uso del servicio de AWS académico será más fácil desarrollar el proyecto utilizando el IDE de Amazon.
-Lambda Otra alternativa es utilizar funciones *serverless*.
+* S3. Utilizaremos este servicio para almacenar las imágenes y otro contenido
+* ECR. Es necesario tener repositorios para almacenar las distintas versiones de las imágenes Docker que utilizaremos.
+* ECS. Utilizaremos el servicio Fargate pare ejecutar tareas y servicios.
+* Cloud9. Por restricciones de uso del servicio de AWS académico será más fácil desarrollar el proyecto utilizando el IDE de Amazon.
+* Lambda Functions. Otra alternativa es utilizar funciones *serverless*.
 
 Para el proyecto puedes investigar otras tecnologías adicionales.
 

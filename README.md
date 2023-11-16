@@ -7,6 +7,10 @@ van a subir imágenes para ser procesadas. El procesamiento puede variar desde
 cambiar el tamaño, aplicar filtros, o incluso ejecutar un modelo simple de
 aprendizaje automático para clasificar o modificar la imagen.
 
+El proyecto sigue un estilo arquitectónico basado en evento como el visto en clase:
+
+![](./img/worker-queue)
+
 **Componentes:**
 1. **Frontend Web:**
    - Una interfaz sencilla donde los usuarios puedan subir imágenes.

@@ -2,7 +2,7 @@
 
 ### Proyecto: Servicio de Procesamiento de Imágenes
 
-En este proyecto vamos a desarrllar una aplicación web donde los usuarios
+En este proyecto vamos a desarrollar una aplicación web donde los usuarios
 puedan subir imágenes para ser procesadas. El procesamiento puede variar desde
 cambiar el tamaño, aplicar filtros, o incluso ejecutar un modelo simple de
 aprendizaje automático para clasificar o detectar objetos en la imagen.

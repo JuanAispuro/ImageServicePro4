@@ -1,43 +1,64 @@
-# Artworks Proyecto 3
+# ImageService
 
 ## Descripción General
 
-Este proyecto consiste en una aplicación para guardar, compartir y coleccionar 
-obras de arte o algún otro elemento de interés para los usuarios. La aplicación se inspira en aplicaciones tipo 
-Pinterest, FIFA Ultimate Team o HearthStone donde los usuarios coleccionan elementos y los
-pueden comartir de alguna manera. La aplicación debe implementar la siguiente funcionalidad:
+### Proyecto: Servicio de Procesamiento de Imágenes
 
-* Los usarios pueden agregar elementos a diferentes colecciones, por ejeplo 
-favoritos, me interesan, en venta, etc. 
-* Debes proponer alguna manera de que los usuarios obtengan elementos. Algunas ideas:
-    * Que los usuarios compren paquetes los cuales incluyen items seleccionados de manera aleatoria.
-    * Los usuarios compran elementos directamente en una tienda.
-    * Los usuarios ofrecen creditos en una subasta para conseguir a los elementos.
-    * Simplemente los eligen de la página. Esto es parecido a Pinterest.
-* Los usuarios pueden gestionar sus colecciones agregando, eliminando, moviendo e intercambiando elementos de las colecciones.
-* Los usuarios deben buscar elementos haciendo una búsqueda por facetas o categorías [Ejemplo con PostgreSQL](https://www.youtube.com/watch?v=QFs6qgvyTC4).
+En este proyecto vamos a desarrollar una aplicación web donde los usuarios
+van a subir imágenes para ser procesadas. El procesamiento puede variar desde
+cambiar el tamaño, aplicar filtros, o incluso ejecutar un modelo simple de
+aprendizaje automático para clasificar o modificar la imagen.
 
-Utiliza este repositorio como base.  Ya incluye el regístro básico de usuarios y la capacidad de iniciar sesión. 
+El proyecto sigue una arquitectura guiada por eventos como las vistas en clase:
 
-Para el proyecto que haremos en clase, utilizaremos como ítems una muestra de 
-obras de arte del sitio [wikiart](https://www.wikiart.org/). Puedes basarte en [este repositorio](https://github.com/mariosky/ArtTest) 
-para un modelo básico, scripts de [web scraping](https://es.wikipedia.org/wiki/Web_scraping) y carga de los datos a la base de datos.
+![](./img/worker-queue.png)
 
-Una vez que tengamos la base de datos podemos iniciar la implementación de los puntos anteriores. 
+**Componentes:**
+1. **Frontend Web:**
+   - Una interfaz sencilla donde los usuarios puedan subir imágenes.
+   - Para esto utilizaremos plantillas de django y programación de lado del cliente.
+   - Mostrar un estado (por ejemplo, "procesando", "listo", "error") del trabajo de procesamiento de imágenes.
+
+2. **Servidor Backend:**
+Podemos utilizar también django pero de manera alternativa para tu proyecto se puedes utilizar nodejs, express,  Flask u otro servidor backend.
+   - Maneja solicitudes HTTP del frontend para la carga de imágenes.
+   - Coloca tareas de procesamiento de imágenes en una cola de mensajes.
+
+3. **Cola de Mensajes:**
+   - Utilizar un sistema de cola de mensajes como RabbitMQ o AWS SQS, en el proyecto a desarrollar en clase utilizaremos Redis.
+   - La cola contiene las tareas que están esperando ser procesadas.
+   
+
+4. **Servicio de Trabajadores:**
+   - Varias instancias de trabajadores que escuchan la cola.
+   - Cuando una tarea está disponible, un trabajador la toma, procesa la imagen y luego actualiza el estado de la tarea.
+   - Los trabajadores funcionan independientemente del servidor web, lo que permite escalabilidad y utilización eficiente de recursos.
+
+5. **Base de Datos:**
+   - Para rastrear el estado y los metadatos de cada tarea de procesamiento de imágenes.
+   - Se podría usar PostgreSQL o algún almacén de datos NoSQL.
+
+**Resultados de Aprendizaje:**
+- Comprensión de cómo las colas de mensajes facilitan el procesamiento asíncrono en aplicaciones web.
+- Experiencia en la escalabilidad de trabajadores basada en la carga.
+- Perspectiva sobre el manejo de tareas de larga duración en una aplicación web sin bloquear las solicitudes de los usuarios.
+- Práctica en la integración de diferentes componentes (frontend, backend, base de datos, cola de mensajes, trabajadores) en una aplicación completa.
+
+**Extensiones:**
+- Implementar diferentes tipos de procesamiento de imágenes para ver cómo se pueden gestionar distintas tareas.
+- Añadir una función para que los usuarios reciban notificaciones (por ejemplo, a través de correo electrónico o una notificación push web) una vez que su procesamiento de imágenes esté completo.
+- Incluir registro y monitoreo para observar el comportamiento del sistema bajo carga.
+
 
 ## Requerimientos Técnicos
 
-En esta aplicación utilizaremos programación del lado del cliente utilizando las librerías [htmx](https://htmx.org/) y [hyperscript](https://hyperscript.org/).  
-De manera opcional puedes utilizar otras librerías o JS.
+Para este proyecto haremos un uso más completo de la plataforma Cloud de Amazon Web Services utilizando los siguientes componentes:
 
-## Url del video
-**https://drive.google.com/file/d/18kEAyW8gMiV-b2oBwkJzaVidXi7ob_6R/view?usp=sharing**
+* S3. Utilizaremos este servicio para almacenar las imágenes y otro contenido
+* ECR. Es necesario tener repositorios para almacenar las distintas versiones de las imágenes Docker que utilizaremos.
+* ECS. Utilizaremos el servicio Fargate pare ejecutar tareas y servicios.
+* Cloud9. Por restricciones de uso del servicio de AWS académico será más fácil desarrollar el proyecto utilizando el IDE de Amazon.
+* Lambda Functions. Otra alternativa es utilizar funciones *serverless*.
 
-## Miembros del equipo
-- Juan Armando Aispuro Sánchez 19211593
-- Leonardo Mercado Celis 19211685
-
-
-
-
+Para el proyecto puedes investigar otras tecnologías adicionales.
 

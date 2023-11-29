@@ -2,17 +2,10 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-from django.core.paginator import Paginator
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from django.contrib.postgres import search
+from .models import Item
 from django.contrib import messages
 
-from .models import (
-    Artwork,
-    savedArtworks,
-)
-
+# from .forms import UploadImageForm
 
 # Register method
 def register(request):
@@ -28,7 +21,7 @@ def register(request):
             print("User registered and logged in.")
 
             # Redirect the user to the "artworks" page after successful registration and login
-            return redirect("artworks")
+            return redirect("/home")
 
     else:
         f = UserCreationForm()
@@ -39,136 +32,13 @@ def register(request):
 def index(request):
     return render(request, "collection/index.html", {"data": "Not"})
 
+def UploadImage(request):
+    if request.method == "POST":
+        prod = Item()
+        if len(request.FILES) != 0:
+            prod.image = request.FILES['image']
 
-# method for artworks page
-def getArtworksAll(request):
-    # Get all artworks
-    all_artworks = Artwork.objects.all()
-    paginator = Paginator(all_artworks, 5)
-    page_number = request.GET.get("page", 1)
-    # Get the Page object for the current page
-    page = paginator.get_page(page_number)
-
-    return render(request, "artwork/allArtworks.html", {"artworks": page})
-
-
-# method for favoriting artworks
-def getFavoriteArtwork(request, idArtwork):
-    # movie = Movie.objects.get(tmdb_id=idDB)
-    favArtwork = savedArtworks.objects.get(userfK=request.user, artworkfK=idArtwork)
-    print("GetFavorite function")
-    if favArtwork.favorited == True:
-        favArtwork.favorited = False
-        favArtwork.save()
-        messages.success(request, "The artwork has been removed successfully!")
-        return redirect(to="favorite_artwork")
-
-    elif favArtwork.favorited == False:
-        favArtwork.favorited = True
-        favArtwork.save()
-        messages.success(request, "The artwork has been favorited successfully!")
-        return redirect(to="favorite_artwork")
-
-    return render(request, "artwork/favoriteArtworks.html", {"artworks": favArtwork})
-
-
-# method for favorite artworks page
-def getFavoriteArtworkAll(request):
-    saved_artwork_entries = savedArtworks.objects.filter(
-        userfK=request.user, favorited=True
-    )
-    # Retrieve the actual artworks associated with the saved entries
-    saved_artworks = [entry.artworkfK for entry in saved_artwork_entries]
-
-    # adds pagination
-    paginator = Paginator(saved_artworks, 5)
-
-    # Get the current page number from the request's query parameters
-    page_number = request.GET.get("page", 1)
-
-    # Get the Page object for the current page
-    page = paginator.get_page(page_number)
-    print(page.paginator.num_pages)
-    print("Esta aqui ")
-    return render(request, "artwork/favoriteArtworks.html", {"favArtworks": page})
-
-
-# This is for when the user is logged in, it sends the user to his saved artworks page
-@login_required
-def SavedArtworks(request):
-    # Get all saved artworks for the current user
-    saved_artwork_entries = savedArtworks.objects.filter(
-        userfK=request.user,
-        favorited=False,
-    )
-
-    # Retrieve the actual artworks associated with the saved entries
-    saved_artworks = [entry.artworkfK for entry in saved_artwork_entries]
-
-    paginator = Paginator(saved_artworks, 5)
-
-    # Get the current page number from the request's query parameters
-    page_number = request.GET.get("page", 1)
-
-    # Get the Page object for the current page
-    page = paginator.get_page(page_number)
-
-    return render(request, "artwork/savedArtworks.html", {"artworks": page})
-
-
-# This is the method for saving artworks
-def save_artwork(request):
-    if request.method == "POST" and request.user.is_authenticated:
-        artwork_id = request.POST.get("artwork_id")
-        print(artwork_id)
-        try:
-            artwork = Artwork.objects.get(pk=artwork_id)
-            saved = savedArtworks.objects.get(userfK=request.user, artworkfK=artwork)
-
-            saved.delete()
-            messages.success(request, "The artwork has been removed successfully!")
-
-        except savedArtworks.DoesNotExist:
-            saved, created = savedArtworks.objects.get_or_create(
-                userfK=request.user, artworkfK=artwork
-            )
-
-            if not created:
-                saved.favorited = not saved.favorited
-                saved.save()
-            messages.success(request, "The artwork has been saved successfully!")
-
-        return redirect(to="save_artwork")
-
-
-# This is the search page method
-def search_view(request):
-    value = request.GET["search"]
-    IndiArtworks = filterArwork(value)
-    paginator = Paginator(IndiArtworks, 5)
-    page_number = request.GET.get("page", 1)
-    page = paginator.get_page(page_number)
-    return render(
-        request,
-        "artwork/artwork_search.html",
-        {"artworks": IndiArtworks, "valorbuscado": value, "page_obj": page},
-    )
-
-
-# this is the method for the search bar
-def filterArwork(value):
-    vector = (
-        search.SearchVector("title", weight="A")
-        + search.SearchVector("author__name", weight="B")
-        + search.SearchVector("style__name", weight="C")
-        + search.SearchVector("genre__name", weight="C")
-    )
-    query = search.SearchQuery(value, search_type="websearch")
-    return (
-        Artwork.objects.annotate(
-            search=vector,
-            rank=search.SearchRank(vector, query),
-        )
-        .filter(search=query)
-        .order_by("-rank")
-    )
+        prod.save()
+        messages.success(request, "Product Added Successfully")
+        return redirect('uploadImages/uploadImage.html')
+    return render(request, 'uploadImages/uploadImage.html')

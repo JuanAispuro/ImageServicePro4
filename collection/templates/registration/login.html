@@ -31,7 +31,7 @@
     {% endif %}
 
     <form id='login_form' class="px-8 pt-3 pb-8 mb-4" 
-    role="form" method="post" action='/accounts/login/' xmlns="http://www.w3.org/1999/html">{% csrf_token %}
+    role="form" method="post" action="/accounts/uploadImage" xmlns="http://www.w3.org/1999/html">{% csrf_token %}
               	<!-- Username -->
               <div class="block  mt-3 text-gray-700 dark:text-slate-300">
                 {{ form.username.label_tag }}

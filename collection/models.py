@@ -11,4 +11,9 @@ def filepath(request, filename):
 
 class Item(models.Model):
     
-    image = models.ImageField(upload_to=filepath, null=True, blank=True)
+    imageOriginal = models.ImageField(upload_to=filepath, null=True, blank=True)
+    imageProcessed1 = models.ImageField(upload_to=filepath, null=True, blank=True)
+    imageProcessed2 = models.ImageField(upload_to=filepath, null=True, blank=True)
+    imageProcessed3 = models.ImageField(upload_to=filepath, null=True, blank=True)
+    imageProcessed4 = models.ImageField(upload_to=filepath, null=True, blank=True)
+    original_image_identifier = models.CharField(max_length=255, blank=True, null=True)

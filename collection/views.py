@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+
 # from .forms import UploadImageForm
+
 
 # Register method
 def register(request):
@@ -36,6 +38,10 @@ def index(request):
     return render(request, "collection/index.html", {"data": "Not"})
 
 
+def test(request):
+    return render(request, "ws.html")
+
+
 def process_and_save_image(original_image):
     processed_image_1 = original_image.transpose(Image.FLIP_LEFT_RIGHT)
     processed_image_2 = original_image.rotate(90)
@@ -49,30 +55,40 @@ def process_and_save_image(original_image):
     except Item.DoesNotExist:
         item = Item(original_image_identifier=original_image_identifier)
 
-    item.imageOriginal.save('original_image.jpg', process_and_get_image(original_image))
-    item.imageProcessed1.save('processed_image_1.jpg', process_and_get_image(processed_image_1))
-    item.imageProcessed2.save('processed_image_2.jpg', process_and_get_image(processed_image_2))
-    item.imageProcessed3.save('processed_image_3.jpg', process_and_get_image(processed_image_3))
-    item.imageProcessed4.save('processed_image_4.jpg', process_and_get_image(processed_image_4))
-    
+    item.imageOriginal.save("original_image.jpg", process_and_get_image(original_image))
+    item.imageProcessed1.save(
+        "processed_image_1.jpg", process_and_get_image(processed_image_1)
+    )
+    item.imageProcessed2.save(
+        "processed_image_2.jpg", process_and_get_image(processed_image_2)
+    )
+    item.imageProcessed3.save(
+        "processed_image_3.jpg", process_and_get_image(processed_image_3)
+    )
+    item.imageProcessed4.save(
+        "processed_image_4.jpg", process_and_get_image(processed_image_4)
+    )
+
+
 def process_and_get_image(image):
     buffer = BytesIO()
-    image.save(buffer, format='JPEG')
+    image.save(buffer, format="JPEG")
     buffer.seek(0)
 
     processed_image = InMemoryUploadedFile(
-        buffer, None, 'processed_image.jpg', 'image/jpeg', buffer.tell(), None, None
+        buffer, None, "processed_image.jpg", "image/jpeg", buffer.tell(), None, None
     )
 
     return processed_image
 
+
 def UploadImage(request):
     if request.method == "POST":
-        if 'image' in request.FILES:
-            image = request.FILES['image']
+        if "image" in request.FILES:
+            image = request.FILES["image"]
             img = Image.open(image)
             process_and_save_image(img)
             messages.success(request, "Images Added Successfully")
-            return redirect('UploadImage')
+            return redirect("UploadImage")
 
-    return render(request, 'uploadImages/uploadImage.html')
+    return render(request, "uploadImages/uploadImage.html")

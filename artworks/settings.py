@@ -30,12 +30,13 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 
 # ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-ALLOWED_HOSTS = ["198.211.99.20", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["198.211.99.20", "localhost", "127.0.0.1", "*"]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 # Application definition
 
 INSTALLED_APPS = [
+    "channels",
     "collection.apps.CollectionConfig",
     "widget_tweaks",
     "django.contrib.admin",
@@ -46,6 +47,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "tailwind",
 ]
+
+ASGI_APPLICATION = "artworks.asgi.application"
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form" onsubmit="sendMessage(event)">
+      <input type="text" id="msg" name="msg" />
+      <!-- <input type="submit" /> -->
+    </form>
+    <h1>Messages:</h1>
+    <ul id="messages"></ul>
+  </body>
+  <script>
+    console.log(window.location);
+    var wsurl = `ws${window.location.protocol.includes("s") ? "s" : ""}://${
+      window.location.host
+    }/ws/socket-server/`;
+    var ws = new WebSocket(wsurl);
+    ws.onmessage = function (e) {
+      var msg = JSON.parse(e.data)["message"];
+      console.log(e.data);
+      document.getElementById("messages").innerHTML += `<li>${msg}</li>`;
+    };
+    function sendMessage(e) {
+      e.preventDefault();
+      var message = e.target.msg.value;
+
+      ws.send(message);
+      e.target.reset();
+    }
+  </script>
+</html>

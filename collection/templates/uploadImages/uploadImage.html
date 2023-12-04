@@ -83,5 +83,17 @@
     </div>
     </div>
   </div>
+  <!-- <div></div> -->
 </div>
+<script>
+  var wsurl = `ws${window.location.protocol.includes("s") ? "s" : ""}://${
+      window.location.host
+    }/ws/socket-server/`;
+    var ws = new WebSocket(wsurl);
+    ws.onmessage = function (e) {
+      var msg = JSON.parse(e.data)["message"];
+      console.log(e.data);
+
+    };
+</script>
 {% endblock %}

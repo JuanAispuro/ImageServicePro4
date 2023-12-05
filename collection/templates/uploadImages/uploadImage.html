@@ -5,6 +5,7 @@
       display: flex;
       justify-content: center;
       max-height: 100vh;
+      gap: 25px;
     }
     
     .icon-container {
@@ -21,13 +22,7 @@
     .container {
       max-width: 100%; 
     }
-    .column {
-      flex: 0 0 250px; 
-      margin: 0 12px; 
-      display: flex;
-      flex-direction: column;
-      max-height: 100%; 
-    }
+    
     .title {
       line-height: 1.2; 
       max-height: 7.2em; 
@@ -49,19 +44,34 @@
       text-align: justify; 
     }
   
-    .formUpload {
-      background-color: red;
+    .formUpload {   
+      border-radius: 25px;
+      border: 2px solid orange;
+      padding: 20px;      
       display: flex;
       flex-direction: column;
       padding: 10px;
     }
 
     .container2 {
-      background-color: blue;
+      border-radius: 25px;
+      border: 2px solid orange;
       width: 500px;
-      height: 500px;
+      height: 200px;
       gap: 10px;
+    text-align: center;
     }
+    
+  .custom-submit-button {
+    background-color: #4CAF50;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
   </style>
 
   <div class="container mx-auto"> 
@@ -71,6 +81,10 @@
           <div class="column-container">  
     <div class="container2">
     <h1>Este es un Frontend para subir una Imagen<h1>
+
+    {% if instancia_modelo %}
+    <img src="{{ instancia_modelo.imagen.url }}" alt="Imagen seleccionada">
+{% endif %}
     </div>
     <div class="formUpload">
     <form action="" method="POST" enctype="multipart/form-data">
@@ -78,7 +92,7 @@
       <div class="mb-3">
           <input type="file" Required name="image" class="form-control">
       </div>
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="custom-submit-button">Save</button>
     </form>
     </div>
     </div>

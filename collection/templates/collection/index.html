@@ -5,7 +5,6 @@
         {% if user.is_authenticated %}
         <div class="my-5 bg-slate-200 border-l-4 border-slate-500 text-slate-700 p-6" role="alert">
         <p class="font-bold text-white">Hola {{user.username}}</p>
-          <p>Aquí podras ver muchas pinturas.</p>
           <p class="font-bold"><a class="text-sky-600" href="{% url 'logout' %}">Termina la sesión</a></p>
         </div>
         {% else %}

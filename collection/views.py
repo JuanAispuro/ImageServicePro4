@@ -50,10 +50,10 @@ def process_and_save_image(original_image):
         item = Item(original_image_identifier=original_image_identifier)
 
     item.imageOriginal.save('original_image.jpg', process_and_get_image(original_image))
-    item.imageProcessed1.save('processed_image_1.jpg', process_and_get_image(processed_image_1))
-    item.imageProcessed2.save('processed_image_2.jpg', process_and_get_image(processed_image_2))
-    item.imageProcessed3.save('processed_image_3.jpg', process_and_get_image(processed_image_3))
-    item.imageProcessed4.save('processed_image_4.jpg', process_and_get_image(processed_image_4))
+    # item.imageProcessed1.save('processed_image_1.jpg', process_and_get_image(processed_image_1))
+    # item.imageProcessed2.save('processed_image_2.jpg', process_and_get_image(processed_image_2))
+    # item.imageProcessed3.save('processed_image_3.jpg', process_and_get_image(processed_image_3))
+    # item.imageProcessed4.save('processed_image_4.jpg', process_and_get_image(processed_image_4))
     
 def process_and_get_image(image):
     buffer = BytesIO()
@@ -67,12 +67,15 @@ def process_and_get_image(image):
     return processed_image
 
 def UploadImage(request):
+    img= None
     if request.method == "POST":
         if 'image' in request.FILES:
             image = request.FILES['image']
             img = Image.open(image)
             process_and_save_image(img)
+            print(img)
+            print(" ------------ ")
             messages.success(request, "Images Added Successfully")
             return redirect('UploadImage')
 
-    return render(request, 'uploadImages/uploadImage.html')
+    return render(request, 'uploadImages/uploadImage.html', {'instancia_modelo': img})

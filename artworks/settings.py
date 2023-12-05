@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "tailwind",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,16 @@ LOGOUT_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+
+AWS_ACCESS_KEY_ID="AKIAS4ZZ32ZRI247X5IQ"
+AWS_SECRET_ACCESS_KEY="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"
+AWS_STORAGE_BUCKET_NAME="bucket-proy4"
+# AWS_S3_ENDPOINT_URL = 's3.us-east-1.amazonaws.com'
+AWS_S3_REGION_NAME="us-east-2"
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE="storages.backends.s3boto3.S3Boto3Storage"

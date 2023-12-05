@@ -2,12 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        <script src="https://unpkg.com/htmx.org@1.9.8" integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/hyperscript.org@latest"></script>
-            {% comment %} }); {% endcomment %}
-  </script>
+    
     
     <meta charset="utf-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -58,11 +53,7 @@
 
   {% endblock scripts %}
   <script>
-    document.body.addEventListener("htmx:afterRequest", function (event) {
-        if (event.detail.elt.getAttribute("hx-trigger") === "submit") {
-            location.reload(); // Reload the page after a form submission
-        }
-    });
+    
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   {% if messages %}

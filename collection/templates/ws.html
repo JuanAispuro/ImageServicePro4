@@ -17,7 +17,7 @@
     console.log(window.location);
     var wsurl = `ws${window.location.protocol.includes("s") ? "s" : ""}://${
       window.location.host
-    }/ws/socket-server/`;
+    }/socket.io/?EIO=4&transport=polling&t=OmuwUiU&b64=1`;
     var ws = new WebSocket(wsurl);
     ws.onmessage = function (e) {
       var msg = JSON.parse(e.data)["message"];

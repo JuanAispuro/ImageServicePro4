@@ -31,6 +31,24 @@ DEBUG = env("DEBUG")
 
 # ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 ALLOWED_HOSTS = ["198.211.99.20", "localhost", "127.0.0.1", "*"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://3164-2806-2f0-1001-987d-51b2-10db-9a2f-2896.ngrok-free.app"
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_REPLACE_HTTPS_REFERER = True
+
+CSRF_COOKIE_DOMAIN = "3164-2806-2f0-1001-987d-51b2-10db-9a2f-2896.ngrok-free.app"
+
+CORS_ORIGIN_WHITELIST = (
+    "https://3164-2806-2f0-1001-987d-51b2-10db-9a2f-2896.ngrok-free.app",
+    "3164-2806-2f0-1001-987d-51b2-10db-9a2f-2896.ngrok-free.app",
+)
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 # Application definition
@@ -141,14 +159,12 @@ LOGOUT_REDIRECT_URL = "/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-
-
-AWS_ACCESS_KEY_ID="AKIAS4ZZ32ZRI247X5IQ"
-AWS_SECRET_ACCESS_KEY="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"
-AWS_STORAGE_BUCKET_NAME="bucket-proy4"
+AWS_ACCESS_KEY_ID = "AKIAS4ZZ32ZRI247X5IQ"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "bucket-proy4"
 # AWS_S3_ENDPOINT_URL = 's3.us-east-1.amazonaws.com'
-AWS_S3_REGION_NAME="us-east-2"
+AWS_S3_REGION_NAME = "us-east-2"
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE="storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

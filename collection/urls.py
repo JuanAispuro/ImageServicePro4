@@ -7,6 +7,7 @@ from . import consumers
 
 urlpatterns = [
     path("", views.index, name="index"),
+    # path("socket.io/", views.index, name="socket"),
     path("accounts/uploadImage", views.UploadImage, name="UploadImage"),
     path("accounts/register", views.register, name="register"),
     path(

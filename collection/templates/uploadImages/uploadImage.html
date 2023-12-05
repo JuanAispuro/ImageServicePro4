@@ -1,69 +1,68 @@
-{% extends "collection/base.html" %}
-{% block content %}
-  <style>
-    .column-container {
-      display: flex;
-      justify-content: center;
-      max-height: 100vh;
-      gap: 25px;
-    }
-    
-    .icon-container {
-      text-align: center; 
-      width: 100px; 
-      height: 100px; 
-      border: 1px solid #000;
-    }
-    
-    i.material-icons {
-      font-size: 24px; 
-      color: #007bff; 
-    }
-    .container {
-      max-width: 100%; 
-    }
-    
-    .title {
-      line-height: 1.2; 
-      max-height: 7.2em; 
-      overflow-y: scroll; 
-      text-overflow: ellipsis;
-      margin-bottom: 8px; 
-    }
-    .title::-webkit-scrollbar {
-      width: 0.2em; 
-    }
-    .title::-webkit-scrollbar-thumb {
-      background-color: transparent; 
-    }
-    .picture {
-      flex: 2; 
-    }
-    .text {
-      flex: 1; 
-      text-align: justify; 
-    }
-  
-    .formUpload {   
-      border-radius: 25px;
-      border: 2px solid orange;
-      padding: 20px;      
-      display: flex;
-      flex-direction: column;
-      padding: 10px;
-    }
+{% extends "collection/base.html" %} {% block content %}
+<style>
+  /* .column-container {
+    display: flex;
+    justify-content: center;
+    max-height: 100vh;
+    gap: 25px;
+  } */
 
-    .container2 {
-      border-radius: 25px;
-      border: 2px solid orange;
-      width: 500px;
-      height: 200px;
-      gap: 10px;
+  .icon-container {
     text-align: center;
-    }
-    
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+  }
+
+  i.material-icons {
+    font-size: 24px;
+    color: #007bff;
+  }
+  .container {
+    max-width: 100%;
+  }
+
+  .title {
+    line-height: 1.2;
+    max-height: 7.2em;
+    overflow-y: scroll;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
+  }
+  .title::-webkit-scrollbar {
+    width: 0.2em;
+  }
+  .title::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  .picture {
+    flex: 2;
+  }
+  .text {
+    flex: 1;
+    text-align: justify;
+  }
+
+  .formUpload {
+    border-radius: 25px;
+    border: 2px solid orange;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  /* .container2 {
+    border-radius: 25px;
+    border: 2px solid orange;
+    width: 500px;
+    height: 200px;
+    gap: 10px;
+    text-align: center;
+  } */
+
   .custom-submit-button {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     border-radius: 10px;
     color: white;
     padding: 10px 20px;
@@ -71,43 +70,108 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-}
-  </style>
+  }
+</style>
 
-  <div class="container mx-auto"> 
-    <div class="text-center"> 
-      <div class="flex flex-col p-4">
-        <div class="container mx-8 w-full">
-          <div class="column-container">  
-    <div class="container2">
-    <h1>Este es un Frontend para subir una Imagen<h1>
-
-    {% if instancia_modelo %}
-    <img src="{{ instancia_modelo.imagen.url }}" alt="Imagen seleccionada">
-{% endif %}
-    </div>
-    <div class="formUpload">
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-      <div class="mb-3">
-          <input type="file" Required name="image" class="form-control">
+<div class="container mx-auto">
+  <div class="text-center">
+    <div class="flex flex-col p-4">
+      <div class="container mx-8 w-full">
+        <div class="column-container max-h-[200px] flex justify-center gap-4">
+          <div class="container2 h-fit max-h-[200px] flex justify-center">
+            <img
+              id="blah"
+              src="#"
+              alt="imagen seleccionada"
+              class="object-cover h-fit max-h-[400px]"
+            />
+          </div>
+          <div class="formUpload">
+            <form
+              id="mainform"
+              action=""
+              method="POST"
+              onsubmit="handleSubmit(event)"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
+              <div class="mb-3">
+                <input
+                  type="file"
+                  required
+                  name="image"
+                  class="form-control"
+                  id="imginp"
+                />
+              </div>
+              <button type="submit" class="custom-submit-button">Save</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <button type="submit" class="custom-submit-button">Save</button>
-    </form>
+      <div
+        class="text-white mt-20 text-[30px] font-[800] w-full flex justify-center items-center"
+      >
+        <span class="rounded-xl p-4 relative ml-[400px]" id="watcher">AAA</span>
+      </div>
+      <!-- <div></div> -->
     </div>
-    </div>
-  </div>
-  <!-- <div></div> -->
-</div>
-<script>
-  var wsurl = `ws${window.location.protocol.includes("s") ? "s" : ""}://${
-      window.location.host
-    }/ws/socket-server/`;
-    var ws = new WebSocket(wsurl);
-    ws.onmessage = function (e) {
-      var msg = JSON.parse(e.data)["message"];
-      console.log(e.data);
+    <script>
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
 
-    };
-</script>
-{% endblock %}
+          reader.onload = function (e) {
+            document
+              .getElementById("blah")
+              .setAttribute("src", e.target.result);
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      document.getElementById("imginp").onchange = function () {
+        readURL(this);
+      };
+      var watcher = document.getElementById("watcher");
+      function handleSubmit(e) {
+        e.preventDefault();
+        watcher.innerHTML = "Loading...";
+        watcher.classList.remove("bg-green-700");
+        watcher.classList.remove("bg-red-700");
+        watcher.classList.add("bg-blue-400");
+        const formData = new FormData(document.getElementById("mainform"));
+        fetch("/accounts/uploadImage", {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+            watcher.innerHTML = "Server Error.";
+            watcher.classList.remove("bg-green-700");
+            watcher.classList.remove("bg-blue-400");
+            watcher.classList.add("bg-red-700");
+          });
+      }
+      var wsurl = `ws${window.location.protocol.includes("s") ? "s" : ""}://${
+        window.location.host
+      }/socket.io/`;
+      var ws = new WebSocket(wsurl);
+
+      ws.onmessage = function (e) {
+        var msg = JSON.parse(e.data)["message"];
+        console.log(e.data);
+
+        watcher.innerText = "Success";
+        watcher.classList.remove("bg-red-700");
+        watcher.classList.remove("bg-blue-400");
+        watcher.classList.add("bg-green-700");
+      };
+    </script>
+    {% endblock %}
+  </div>
+</div>

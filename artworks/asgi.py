@@ -24,7 +24,7 @@ application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": AuthMiddlewareStack(
-            URLRouter([re_path(r"ws/socket-server", consumers.MsgConsumer.as_asgi())])
+            URLRouter([re_path(r"socket.io/", consumers.MsgConsumer.as_asgi())])
         )
         # Just HTTP for now. (We can add other protocols later.)
     }

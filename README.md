@@ -10,7 +10,9 @@ cambiar el tamaño, aplicar filtros, o incluso ejecutar un modelo simple de
 aprendizaje automático para clasificar o modificar la imagen.
 
 El proyecto sigue una arquitectura guiada por eventos como las vistas en clase:
-Integrantes del proyecto
+
+
+Integrantes del proyecto:
 ```
 - Aispuro Sánchez Juan Armando 19211593
 - Mercado Celis Leonardo 19211685
